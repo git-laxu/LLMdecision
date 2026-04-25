@@ -1,0 +1,281 @@
+/* app/css/layout.css */
+
+html,
+body {
+  height: 100%;
+  overflow: auto;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  flex: 0 0 auto;
+}
+
+.module-page {
+  display: none;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.module-page.active {
+  display: flex;
+  flex-direction: column;
+}
+
+.module-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 0;
+}
+
+.module-header {
+  flex: 0 0 auto;
+}
+
+.page-tabs,
+.bottom-actions,
+.panel-actions {
+  flex: 0 0 auto;
+}
+
+.sub-section {
+  min-height: 0;
+}
+
+.scroll-panel {
+  min-height: 0;
+  overflow: auto;
+}
+
+.two-col-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 20px;
+  min-height: 0;
+  flex: 1 1 auto;
+}
+
+.three-col-layout {
+  display: grid;
+  grid-template-columns: 0.95fr 0.95fr 1.1fr;
+  gap: 20px;
+  min-height: 0;
+  flex: 1 1 auto;
+}
+
+.col-panel {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden;
+}
+
+.panel-card {
+  background: var(--bg-primary, #fff);
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 14px;
+  padding: 16px;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.panel-card.fill {
+  flex: 1 1 auto;
+}
+
+.panel-card.scrollable {
+  overflow: auto;
+}
+
+@media (max-width: 1200px) {
+  .two-col-layout,
+  .three-col-layout {
+    grid-template-columns: 1fr;
+    overflow: auto;
+  }
+
+  html,
+  body {
+    overflow: auto;
+  }
+
+  .app-container,
+  .module-page,
+  .module-content {
+    height: auto;
+    overflow: visible;
+  }
+}
+
+.module-main-fixed {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: calc(100vh - 180px);
+  min-height: 620px;
+}
+
+.module-main-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+
+.section-scroll {
+  min-height: 0;
+  overflow: auto;
+}
+
+/* ===== 通用弹窗修复 ===== */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(15, 23, 42, 0.45);
+}
+
+.modal.is-open,
+.modal[style*="display: flex"] {
+  display: flex;
+}
+
+.modal-content {
+  width: min(520px, 92vw);
+  max-height: min(80vh, 720px);
+  overflow: auto;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 24px 64px rgba(15, 23, 42, 0.18);
+  border: 1px solid #e2e8f0;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 20px 20px;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* ===== 新建知识类别弹窗：强制全屏遮罩与居中 ===== */
+#newKnowledgeCategoryModal {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 10000 !important;
+  display: none;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 24px !important;
+  background: rgba(15, 23, 42, 0.45) !important;
+  box-sizing: border-box;
+}
+
+#newKnowledgeCategoryModal.is-open,
+#newKnowledgeCategoryModal[style*="display: flex"] {
+  display: flex !important;
+}
+
+#newKnowledgeCategoryModal .modal-content {
+  position: relative !important;
+  width: min(480px, 92vw) !important;
+  max-width: 480px !important;
+  min-width: 320px !important;
+  max-height: 80vh !important;
+  overflow: auto !important;
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 24px 64px rgba(15, 23, 42, 0.18) !important;
+  margin: 0 !important;
+  transform: none !important;
+}
+
+#newKnowledgeCategoryModal .modal-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 18px 20px !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  background: #ffffff !important;
+}
+
+#newKnowledgeCategoryModal .modal-body {
+  padding: 20px !important;
+  background: #ffffff !important;
+}
+
+#newKnowledgeCategoryModal .modal-footer {
+  display: flex !important;
+  justify-content: flex-end !important;
+  gap: 12px !important;
+  padding: 16px 20px 20px !important;
+  border-top: 1px solid #e2e8f0 !important;
+  background: #ffffff !important;
+}
+
+/* ===== 强制让知识类别弹窗脱离页面布局约束 ===== */
+body > #newKnowledgeCategoryModal {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 24px !important;
+  display: none;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(15, 23, 42, 0.45) !important;
+  z-index: 10000 !important;
+  box-sizing: border-box !important;
+}
+
+body > #newKnowledgeCategoryModal.is-open,
+body > #newKnowledgeCategoryModal[style*="display: flex"] {
+  display: flex !important;
+}
+
+body > #newKnowledgeCategoryModal .modal-content {
+  width: min(480px, 92vw) !important;
+  max-width: 480px !important;
+  min-width: 320px !important;
+  margin: 0 !important;
+}

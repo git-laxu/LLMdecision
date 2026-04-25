@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>建筑环境调节策略生成系统</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="./css/styles.css" />
+  <link rel="stylesheet" href="./css/layout.css" />
+  <link rel="stylesheet" href="./css/pages.css" />
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <div class="logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="4" y="8" width="24" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+            <path d="M4 14h24M4 20h24" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 8V4h8v4" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </div>
+        <h1 class="header-title">建筑环境调节策略生成系统</h1>
+      </div>
+
+      <div class="header-right">
+        <div class="module-nav">
+          <button class="module-nav-btn active" data-module="knowledge">
+            知识库与样本库构建
+          </button>
+          <button class="module-nav-btn" data-module="strategy">
+            决策策略生成
+          </button>
+          <button class="module-nav-btn" data-module="projects">
+            项目与数据管理
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- 模块1：知识库与样本库 -->
+    <section class="module-page active" id="moduleKnowledge">
+      <div class="module-content">
+        <div class="module-header">
+          <!-- <h2 class="module-title">知识库与样本库构建</h2> -->
+          <p class="module-desc">导入和管理结构化与非结构化知识文件，构建样本库</p>
+        </div>
+
+        <div class="page-tabs">
+          <button class="page-tab active" data-tab="knowledge">知识库管理</button>
+          <button class="page-tab" data-tab="sample">样本库管理</button>
+        </div>
+
+        <!-- 知识库 -->
+        <div class="tab-content active" id="knowledgeTab">
+          <div class="sub-section">
+            <h3 class="sub-section-title">导入知识</h3>
+
+            <div class="knowledge-toolbar">
+  <div class="knowledge-toolbar-left">
+    <div class="form-group knowledge-category-group">
+      <label class="form-label">知识类别</label>
+      <select class="form-select" id="knowledgeCategorySelect"></select>
+    </div>
+
+    <div class="form-group knowledge-type-group">
+      <label class="form-label">知识条目类型</label>
+      <select class="form-select" id="knowledgeTypeSelect">
+        <option value="standard">标准</option>
+        <option value="paper">论文</option>
+        <option value="structured">结构化信息</option>
+        <option value="other">其他</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="knowledge-toolbar-right">
+    <!-- <button class="btn btn-danger" id="deleteKnowledgeCategoryBtn">删除当前类别</button> -->
+  </div>
+</div>
+
+            <div class="import-type-selector">
+              <div class="import-type-grid">
+                <button class="import-type-btn active" data-import-type="json-input">
+                  键入JSON结构
+                </button>
+                <button class="import-type-btn" data-import-type="text-input">
+                  键入文本信息
+                </button>
+                <button class="import-type-btn" data-import-type="pdf-file">
+                  导入PDF文件
+                </button>
+                <button class="import-type-btn" data-import-type="word-file">
+                  导入Word文件
+                </button>
+                <button class="import-type-btn" data-import-type="json-file">
+                  导入JSON文件
+                </button>
+              </div>
+            </div>
+
+            <!-- JSON 面板 -->
+            <div class="import-panel active" id="jsonInputPanel">
+              <div class="form-group full-width">
+                <!-- <label class="form-label">JSON结构化数据</label> -->
+                <textarea
+                  class="form-textarea code-textarea"
+                  id="jsonInputText"
+                  rows="12"
+                  placeholder='{
+  "knowledge": [
+    {
+      "id": "K001",
+      "category": "热环境调节",
+      "content": "当室内温度高于28℃时，应优先调节空调温度设定值",
+      "priority": 1
+    }
+  ]
+}'
+                ></textarea>
+                <span class="form-hint">请输入有效的JSON格式知识数据</span>
+              </div>
+              <div class="panel-actions">
+                <button class="btn btn-secondary" id="validateJsonBtn">验证JSON</button>
+                <button class="btn btn-primary" id="importJsonBtn">导入知识</button>
+              </div>
+            </div>
+
+            <!-- 文本面板 -->
+            <div class="import-panel" id="textInputPanel">
+              <div class="form-group">
+                <label class="form-label">知识标题</label>
+                <input type="text" class="form-input" id="knowledgeTitle" placeholder="输入知识标题" />
+              </div>
+              <div class="form-group">
+                <!-- <label class="form-label">知识分类</label> -->
+                <!-- <select class="form-select" id="knowledgeCategory"> -->
+                  <!-- <option value="">请选择分类</option>
+                  <option value="热环境调节">热环境调节</option>
+                  <option value="光照调节">光照调节</option>
+                  <option value="通风控制">通风控制</option>
+                  <option value="能耗优化">能耗优化</option>
+                  <option value="人员行为">人员行为</option>
+                  <option value="其他">其他</option> -->
+                </select>
+              </div>
+              <div class="form-group full-width">
+                <label class="form-label">知识内容</label>
+                <textarea class="form-textarea" id="knowledgeContent" rows="8" placeholder="请输入知识内容..."></textarea>
+              </div>
+              <div class="panel-actions">
+                <button class="btn btn-secondary" id="clearTextBtn">清空</button>
+                <button class="btn btn-primary" id="importTextBtn">导入知识</button>
+              </div>
+            </div>
+
+            <!-- PDF -->
+            <div class="import-panel" id="pdfFilePanel">
+  <div class="file-upload-zone" id="pdfUploadZone">
+    <input type="file" id="pdfFileInput" accept=".pdf" multiple hidden />
+    <p class="upload-title">拖拽PDF文件到此处</p>
+    <p class="upload-subtitle">或点击选择文件</p>
+  </div>
+
+  <div class="file-preview-list" id="pdfPreviewList"></div>
+
+  <div class="panel-actions">
+    <button class="btn btn-primary" id="importPdfBtn" disabled>导入PDF内容</button>
+  </div>
+</div>
+
+            <!-- Word -->
+            <div class="import-panel" id="wordFilePanel">
+  <div class="file-upload-zone" id="wordUploadZone">
+    <input type="file" id="wordFileInput" accept=".doc,.docx" multiple hidden />
+    <p class="upload-title">拖拽Word文件到此处</p>
+    <p class="upload-subtitle">支持 .doc / .docx</p>
+  </div>
+
+  <div class="file-preview-list" id="wordPreviewList"></div>
+
+  <div class="panel-actions">
+    <button class="btn btn-primary" id="importWordBtn" disabled>导入Word内容</button>
+  </div>
+</div>
+
+            <!-- JSON 文件 -->
+            <div class="import-panel" id="jsonFilePanel">
+  <div class="file-upload-zone" id="jsonUploadZone">
+    <input type="file" id="jsonFileInput" accept=".json" multiple hidden />
+    <p class="upload-title">拖拽JSON文件到此处</p>
+    <p class="upload-subtitle">或点击选择文件</p>
+  </div>
+
+  <div class="file-preview-list" id="jsonFilePreviewList"></div>
+
+  <div class="panel-actions">
+    <button class="btn btn-primary" id="importJsonFileBtn" disabled>导入JSON文件</button>
+  </div>
+</div>
+
+<!-- 知识管理展示部分 -->
+          <div class="sub-section">
+  <h3 class="sub-section-title">已导入知识</h3>
+
+  <div class="knowledge-stats" id="knowledgeStats"></div>
+
+  <!-- <div class="knowledge-bulk-actions"> -->
+    <!-- <div class="form-group">
+      <label class="form-label">批量移动到类别</label>
+      <select class="form-select" id="moveKnowledgeTargetCategory"></select>
+    </div>
+    <div class="knowledge-bulk-btns">
+      <button class="btn btn-secondary" id="moveSelectedKnowledgeBtn">移动选中条目</button>
+      <button class="btn btn-danger" id="deleteSelectedKnowledgeBtn">移除选中条目</button>
+    </div> -->
+  <!-- </div> -->
+
+  <div class="knowledge-grouped-list" id="knowledgeGroupedList">
+    <div class="data-list-empty">
+      <p>暂无导入的知识数据</p>
+    </div>
+  </div>
+
+  <div class="knowledge-bulk-actions">
+    <div class="form-group knowledge-bulk-target">
+      <label class="form-label">批量移动选中条目到</label>
+      <select class="form-select" id="moveKnowledgeTargetCategory"></select>
+    </div>
+    <div class="knowledge-bulk-btns">
+      <button class="btn btn-secondary" id="moveSelectedKnowledgeBtn">确定</button>
+      <button class="btn btn-danger" id="deleteSelectedKnowledgeBtn">批量移除选中条目</button>
+    </div> 
+  </div> 
+
+</div>
+
+<!-- 知识处理和向量化部分 -->
+<div class="sub-section">
+  <h3 class="sub-section-title">知识处理与向量化</h3>
+
+  <div class="knowledge-process-panel">
+    <div class="process-config-grid">
+      <div class="form-group">
+        <label class="form-label">文本切片长度（chunk size）</label>
+        <input type="number" class="form-input" id="chunkSizeInput" min="1" value="1000" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">切片重叠（chunk overlap）</label>
+        <input type="number" class="form-input" id="chunkOverlapInput" min="0" value="50" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">嵌入模型</label>
+        <input type="text" class="form-input" id="embeddingModelInput" value="text-embedding-v1" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">向量库名称</label>
+        <input type="text" class="form-input" id="vectorStoreInput" value="building_env_knowledge" />
+      </div>
+    </div>
+
+    <div class="process-action-row">
+      <button class="btn btn-secondary" id="runChunkingBtn">执行文本解析与切分</button>
+      <button class="btn btn-secondary" id="runVectorizeBtn">执行文本向量化</button>
+      <button class="btn btn-primary" id="runAllProcessBtn">一键完成处理</button>
+      <button class="btn btn-secondary" id="refreshProcessStatusBtn">刷新状态</button>
+    </div>
+
+    <div class="process-status-grid">
+      <div class="process-status-card">
+        <div class="process-status-label">当前状态</div>
+        <div class="process-status-value" id="processStatusValue">idle</div>
+      </div>
+
+      <div class="process-status-card">
+        <div class="process-status-label">已切分片段数</div>
+        <div class="process-status-value" id="processChunkCountValue">0</div>
+      </div>
+
+      <div class="process-status-card">
+        <div class="process-status-label">已向量化片段数</div>
+        <div class="process-status-value" id="processVectorCountValue">0</div>
+      </div>
+
+      <div class="process-status-card">
+        <div class="process-status-label">最近处理时间</div>
+        <div class="process-status-value" id="processLastTimeValue">暂无</div>
+      </div>
+    </div>
+
+    <div class="process-log-panel">
+      <div class="process-log-title">处理日志</div>
+      <div class="process-log-box" id="processLogBox">
+        <div class="process-log-empty">暂无处理日志</div>
+      </div>
+    </div>
+  </div>
+</div>
+        </div>
+
+        <!-- 样本库 -->
+        <div class="tab-content" id="sampleTab">
+          <div class="sub-section">
+            <h3 class="sub-section-title">构建样本</h3>
+
+            <div class="sample-input-modes">
+              <button class="sample-mode-btn active" data-sample-mode="direct">直接输入</button>
+              <button class="sample-mode-btn" data-sample-mode="structured">填空式输入</button>
+            </div>
+
+            <div class="sample-panel active" id="sampleDirectPanel">
+              <div class="form-group full-width">
+                <label class="form-label">场景描述文本</label>
+                <textarea class="form-textarea" id="sampleSceneText" rows="6"></textarea>
+              </div>
+              <div class="form-group full-width">
+                <label class="form-label">LLM响应文本</label>
+                <textarea class="form-textarea" id="sampleResponseText" rows="6"></textarea>
+              </div>
+              <div class="panel-actions">
+                <button class="btn btn-secondary" id="clearSampleDirectBtn">清空</button>
+                <button class="btn btn-primary" id="addSampleDirectBtn">添加样本</button>
+              </div>
+            </div>
+
+            <div class="sample-panel" id="sampleStructuredPanel">
+              <div class="form-group">
+                <label class="form-label">场景名称</label>
+                <input type="text" class="form-input" id="structSceneName" />
+              </div>
+              <div class="panel-actions">
+                <button class="btn btn-secondary" id="clearStructBtn">清空</button>
+                <button class="btn btn-primary" id="generateSampleBtn">生成样本</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="sub-section">
+            <h3 class="sub-section-title">已构建样本</h3>
+            <div class="data-list" id="sampleList">
+              <div class="data-list-empty">
+                <p>暂无样本数据</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bottom-actions">
+          <button class="btn btn-secondary" id="exportKnowledgeBtn">导出知识库</button>
+          <button class="btn btn-secondary" id="exportSampleBtn">导出样本库</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 模块2：策略生成 -->
+<section class="module-page" id="moduleStrategy">
+  <div class="module-content">
+    <div class="module-header">
+      <h2 class="module-title">决策策略生成</h2>
+      <p class="module-desc">基于多模态状态与知识增强生成热调节策略</p>
+    </div>
+
+    <div class="sub-section">
+      <h3 class="sub-section-title">输入区</h3>
+      <div class="form-group">
+        <label class="form-label">地点</label>
+        <input type="text" class="form-input" id="strategyLocation" placeholder="如：哈尔滨" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">空间类型</label>
+        <input type="text" class="form-input" id="strategySpaceType" placeholder="如：开放办公区" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">空气温度（℃）</label>
+        <input type="number" class="form-input" id="strategyAirTemp" value="26" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">相对湿度（%）</label>
+        <input type="number" class="form-input" id="strategyHumidity" value="55" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">TSV</label>
+        <input type="number" step="0.1" class="form-input" id="strategyTSV" value="0.8" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">调节目标</label>
+        <input type="text" class="form-input" id="strategyGoal" placeholder="如：降低热不适并控制能耗" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">设备约束</label>
+        <input type="text" class="form-input" id="strategyDeviceLimit" placeholder="如：空调设定温度不得低于24℃" />
+      </div>
+      <div class="form-group">
+        <label><input type="checkbox" id="strategyEnergyPriority" /> 节能优先</label>
+      </div>
+      <div class="form-group">
+        <label><input type="checkbox" id="strategyLocalFirst" checked /> 优先局部调节</label>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3 class="sub-section-title">语义化状态上下文</h3>
+      <div class="panel-actions">
+        <button class="btn btn-secondary" id="generateSemanticBtn">生成语义化描述</button>
+        <button class="btn btn-secondary" id="copySemanticBtn">复制内容</button>
+      </div>
+      <div class="form-group full-width">
+        <textarea class="form-textarea" id="semanticOutput" rows="8" placeholder="生成的语义化状态上下文将在此显示"></textarea>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3 class="sub-section-title">模型调用区</h3>
+      <div class="form-group">
+        <label class="form-label">API Key</label>
+        <input type="text" class="form-input" id="modelApiKey" placeholder="输入模型接口Key" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">模型ID</label>
+        <input type="text" class="form-input" id="modelId" value="qwen-plus" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">temperature</label>
+        <input type="number" step="0.1" class="form-input" id="modelTemperature" value="0.7" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">top_p</label>
+        <input type="number" step="0.1" class="form-input" id="modelTopP" value="0.9" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">max_tokens</label>
+        <input type="number" class="form-input" id="modelMaxTokens" value="2000" />
+      </div>
+      <div class="panel-actions">
+        <button class="btn btn-primary" id="generateStrategyBtn">生成策略</button>
+      </div>
+      <div id="strategyLoading" class="data-list-empty" style="display:none;">
+        <p>策略生成中...</p>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3 class="sub-section-title">策略输出区</h3>
+      <div class="form-group">
+        <label class="form-label">任务</label>
+        <div class="result-text-block" id="resultTask"></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">约束</label>
+        <div class="result-text-block" id="resultConstraints"></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">规则/知识</label>
+        <div class="result-text-block" id="resultRules"></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">策略摘要</label>
+        <div class="result-text-block" id="resultDecisionText"></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">结构化结果 JSON</label>
+        <textarea class="form-textarea code-textarea" id="resultJson" rows="10"></textarea>
+      </div>
+      <div class="panel-actions">
+        <button class="btn btn-secondary" id="copyResultBtn">复制结果</button>
+        <button class="btn btn-secondary" id="exportResultBtn">导出结果</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <!-- 模块3：项目管理 -->
+<section class="module-page" id="moduleProjects">
+  <div class="module-content">
+    <div class="module-header">
+      <h2 class="module-title">项目与数据管理</h2>
+      <p class="module-desc">项目、任务、结果与历史记录管理</p>
+    </div>
+
+    <div class="sub-section">
+      <div class="panel-actions">
+        <button class="btn btn-primary" id="newProjectBtn">新建项目</button>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">搜索项目</label>
+        <input type="text" class="form-input" id="projectSearchInput" placeholder="输入项目名称关键词" />
+      </div>
+
+      <!-- <h3 class="sub-section-title">项目列表</h3> -->
+      <div class="project-list-wrap">
+      <div class="data-list" id="projectList">
+        <div class="data-list-empty">
+          <p>暂无项目数据</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-section">
+      <h3 class="sub-section-title">历史策略记录</h3>
+      <div class="panel-actions">
+        <button class="btn btn-secondary" id="clearHistoryBtn">清空历史</button>
+      </div>
+      <div class="data-list" id="historyList">
+        <div class="data-list-empty">
+          <p>暂无历史策略记录</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  </div>
+
+  <!-- 通用 Toast -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- 新建项目弹窗 -->
+  <div id="newProjectModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>新建项目</h3>
+        <button class="btn btn-sm btn-icon" id="closeNewProjectModal">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">项目名称</label>
+          <input type="text" class="form-input" id="newProjectName" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">项目描述</label>
+          <textarea class="form-textarea" id="newProjectDesc" rows="4"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancelNewProject">取消</button>
+        <button class="btn btn-primary" id="confirmNewProject">确定</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script type="module" src="./js/main.js"></script>
+
+<div id="newKnowledgeCategoryModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>新建知识类别</h3>
+      <button type="button" class="btn btn-sm btn-icon" id="closeKnowledgeCategoryModal">×</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label" for="newKnowledgeCategoryName">类别名称</label>
+        <input
+          type="text"
+          class="form-input"
+          id="newKnowledgeCategoryName"
+          placeholder="请输入知识类别名称"
+        />
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" id="cancelKnowledgeCategoryBtn">取消</button>
+      <button type="button" class="btn btn-primary" id="confirmKnowledgeCategoryBtn">确定</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
